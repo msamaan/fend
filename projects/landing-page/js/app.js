@@ -39,29 +39,24 @@
 */
 
 // build the nav
-const navElement = document.querySelector('#navbar__list');
-// navElement.style.cssText = 'position: fixed; width: 100%; margin-top: 20px;';
+const ulElement = document.querySelector('#navbar__list');
+
+ulElement.addEventListener('mouseover', mouseOverEvent)
+ulElement.addEventListener('mouseout', mouseOutEvent)
+
 const sectionOneAnchor = "<li class='nav-link'><a href='#section1'>Section 1</a></li>";
 const sectionTwoAnchor = "<li class='nav-link'><a href='#section2'>Section 2</a></li>";
 const sectionThreeAnchor = "<li class='nav-link'><a href='#section3'>Section 3</a></li>";
-navElement.insertAdjacentHTML('afterbegin', sectionThreeAnchor);
-navElement.insertAdjacentHTML('afterbegin', sectionTwoAnchor);
-navElement.insertAdjacentHTML('afterbegin', sectionOneAnchor);
+ulElement.insertAdjacentHTML('afterbegin', sectionThreeAnchor);
+ulElement.insertAdjacentHTML('afterbegin', sectionTwoAnchor);
+ulElement.insertAdjacentHTML('afterbegin', sectionOneAnchor);
 
 //Not using forEach for compatability with different browsers
 const navLinks = document.querySelectorAll('.nav-link');
-for(let i = 0; i < navLinks.length; i++) {
+for (let i = 0; i < navLinks.length; i++) {
     let elem = navLinks[i];
     elem.style.padding = '10px';
     elem.firstChild.style.cssText = 'color: #000; text-decoration: none; padding: 10px;';
-    elem.addEventListener('mouseenter', function() {
-        elem.style.backgroundColor = '#000';
-        elem.firstChild.style.color = '#fff';
-    })
-    elem.addEventListener('mouseleave', function() {
-        elem.style.backgroundColor = '#fff';
-        elem.firstChild.style.color = '#000';
-    })
 }
 
 // Add class 'active' to section when near top of viewport
@@ -75,6 +70,18 @@ for(let i = 0; i < navLinks.length; i++) {
  * Begin Events
  * 
 */
+function mouseOverEvent(event) {
+    if (event.target.nodeName === 'A') {
+        event.target.parentElement.style.backgroundColor = '#000';
+        event.target.style.color = '#fff';
+    }
+}
+function mouseOutEvent(event) {
+    if (event.target.nodeName === 'A') {
+        event.target.parentElement.style.backgroundColor = '#fff';
+        event.target.style.color = '#000';
+    }
+}
 
 // Build menu 
 
