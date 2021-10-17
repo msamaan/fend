@@ -41,12 +41,14 @@
 // build the nav
 const ulElement = document.querySelector('#navbar__list');
 
-ulElement.addEventListener('mouseover', mouseOverEvent)
-ulElement.addEventListener('mouseout', mouseOutEvent)
+ulElement.addEventListener('mouseover', mouseOverEvent);
+ulElement.addEventListener('mouseout', mouseOutEvent);
+ulElement.addEventListener('click', clickEvent);
+document.addEventListener("scroll", activeNav);
 
-const sectionOneAnchor = "<li class='nav-link'><a href='#section1'>Section 1</a></li>";
-const sectionTwoAnchor = "<li class='nav-link'><a href='#section2'>Section 2</a></li>";
-const sectionThreeAnchor = "<li class='nav-link'><a href='#section3'>Section 3</a></li>";
+const sectionOneAnchor = "<li class='nav-link'><a href='' class='section1'>Section 1</a></li>";
+const sectionTwoAnchor = "<li class='nav-link'><a href='' class='section2'>Section 2</a></li>";
+const sectionThreeAnchor = "<li class='nav-link'><a href='' class='section3'>Section 3</a></li>";
 ulElement.insertAdjacentHTML('afterbegin', sectionThreeAnchor);
 ulElement.insertAdjacentHTML('afterbegin', sectionTwoAnchor);
 ulElement.insertAdjacentHTML('afterbegin', sectionOneAnchor);
@@ -81,6 +83,16 @@ function mouseOutEvent(event) {
         event.target.parentElement.style.backgroundColor = '#fff';
         event.target.style.color = '#000';
     }
+}
+function clickEvent(event) {
+    if (event.target.nodeName === 'A') {
+        event.preventDefault();
+        document.getElementById(event.target.className).scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    }
+}
+function activeNav(event) {
+    console.log("event.target.className", event.srcElement.getAttribute('data-nav'))
 }
 
 // Build menu 
