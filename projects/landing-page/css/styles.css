@@ -74,6 +74,14 @@ section {
     display: inline-block;
 }
 
+.navbar__menu li.active {
+    background-color: #000 !important;
+}
+
+.navbar__menu li.active a {
+    color: #fff !important;
+}
+
 .navbar__menu .menu__link {
     display: block;
     padding: 1em;
