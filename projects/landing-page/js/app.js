@@ -23,29 +23,23 @@
  * 
 */
 
+const ulElement = document.querySelector('#navbar__list');
+const sections = document.querySelectorAll('section');
+const navLinks = document.querySelectorAll('.nav-link');
 
 /**
  * End Global Variables
- * Start Helper Functions
- * 
-*/
-
-
-
-/**
- * End Helper Functions
  * Begin Main Functions
  * 
 */
 
-// build the nav
-const ulElement = document.querySelector('#navbar__list');
-const sections = document.querySelectorAll('section');
-
+// adding event listners to navigation menu 
 ulElement.addEventListener('mouseover', mouseOverEvent);
 ulElement.addEventListener('mouseout', mouseOutEvent);
 ulElement.addEventListener('click', clickEvent);
 
+
+// adding menu items
 let allSections = "";
 for (let s = 0; s < sections.length; s++) {
     let currentSection = sections[s];
@@ -56,7 +50,6 @@ for (let s = 0; s < sections.length; s++) {
 ulElement.insertAdjacentHTML('beforeend', allSections);
 
 //Not using forEach for compatability with different browsers
-const navLinks = document.querySelectorAll('.nav-link');
 for (let i = 0; i < navLinks.length; i++) {
     let elem = navLinks[i];
     elem.style.padding = '10px';
@@ -90,9 +83,6 @@ function callback(entries) {
 }
 
 
-// Scroll to anchor ID using scrollTO event
-
-
 /**
  * End Main Functions
  * Begin Events
@@ -120,9 +110,7 @@ function clickEvent(event) {
         document.getElementById(event.target.className).scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 }
-
-// Build menu 
-
-// Scroll to section on link click
-
-// Set sections as active
+/**
+ * End Events
+ * 
+*/
