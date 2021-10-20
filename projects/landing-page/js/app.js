@@ -25,7 +25,6 @@
 
 const ulElement = document.querySelector('#navbar__list');
 const sections = document.querySelectorAll('section');
-const navLinks = document.querySelectorAll('.nav-link');
 
 /**
  * End Global Variables
@@ -49,9 +48,11 @@ for (let s = 0; s < sections.length; s++) {
 }
 ulElement.insertAdjacentHTML('beforeend', allSections);
 
+const navLinks = document.querySelectorAll('.nav-link');
 //Not using forEach for compatability with different browsers
 for (let i = 0; i < navLinks.length; i++) {
     let elem = navLinks[i];
+    console.log("ELEM", elem)
     elem.style.padding = '10px';
     elem.firstChild.style.cssText = 'color: #000; text-decoration: none; padding: 10px;';
 }
@@ -74,10 +75,13 @@ function callback(entries) {
         if (entry.isIntersecting) {
             let className = entry.target.getAttribute('data-nav').replace(' ', '').toLowerCase();
             document.querySelector("." + className + "-li").classList.add('active');
+            document.querySelector("#" + className).classList.add('your-active-class');
         }
         else {
             let className = entry.target.getAttribute('data-nav').replace(' ', '').toLowerCase();
             document.querySelector("." + className + "-li").classList.remove('active');
+            document.querySelector("#" + className).classList.remove('your-active-class');
+            document.querySelector(".scroll-top").style.visibility = 'visible';
         }
     })
 }
@@ -114,3 +118,22 @@ function clickEvent(event) {
  * End Events
  * 
 */
+
+
+// scroll to top
+document.addEventListener('scroll', function (e) {
+    if(window.pageYOffset > document.querySelector(".main__hero h1").clientHeight) {
+        document.querySelector(".scroll-top").style.visibility = 'visible';
+    }
+    else {
+        document.querySelector(".scroll-top").style.visibility = 'hidden';
+    }
+});
+document.querySelector(".scroll-top").addEventListener('click', scrollTop);
+function scrollTop() {
+    window.scrollTo({
+        top: 100,
+        left: 100,
+        behavior: 'smooth'
+    });
+}
