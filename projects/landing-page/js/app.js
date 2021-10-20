@@ -45,7 +45,6 @@ const sections = document.querySelectorAll('section');
 ulElement.addEventListener('mouseover', mouseOverEvent);
 ulElement.addEventListener('mouseout', mouseOutEvent);
 ulElement.addEventListener('click', clickEvent);
-// document.addEventListener("scroll", activeNav);
 
 let allSections = "";
 for (let s = 0; s < sections.length; s++) {
@@ -53,16 +52,8 @@ for (let s = 0; s < sections.length; s++) {
     let className = currentSection.getAttribute('data-nav').replace(' ', '').toLocaleLowerCase();
     let sectionAnchor = "<li class='nav-link " + className + "-li'><a href='' class='" + className + "'>" + currentSection.getAttribute('data-nav') + "</a></li>";
     allSections += sectionAnchor;
-    // ulElement.insertAdjacentHTML('beforeend', sectionAnchor);
 }
 ulElement.insertAdjacentHTML('beforeend', allSections);
-
-// const sectionOneAnchor = "<li class='nav-link'><a href='' class='section1'>Section 1</a></li>";
-// const sectionTwoAnchor = "<li class='nav-link'><a href='' class='section2'>Section 2</a></li>";
-// const sectionThreeAnchor = "<li class='nav-link'><a href='' class='section3'>Section 3</a></li>";
-// ulElement.insertAdjacentHTML('afterbegin', sectionThreeAnchor);
-// ulElement.insertAdjacentHTML('afterbegin', sectionTwoAnchor);
-// ulElement.insertAdjacentHTML('afterbegin', sectionOneAnchor);
 
 //Not using forEach for compatability with different browsers
 const navLinks = document.querySelectorAll('.nav-link');
@@ -72,7 +63,31 @@ for (let i = 0; i < navLinks.length; i++) {
     elem.firstChild.style.cssText = 'color: #000; text-decoration: none; padding: 10px;';
 }
 
+
+
+
 // Add class 'active' to section when near top of viewport
+let options = {
+    threshold: 0.7
+}
+
+let observer = new IntersectionObserver(callback, options);
+sections.forEach((sec) => {
+    observer.observe(sec);
+})
+
+function callback(entries) {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            let className = entry.target.getAttribute('data-nav').replace(' ', '').toLowerCase();
+            document.querySelector("." + className + "-li").classList.add('active');
+        }
+        else {
+            let className = entry.target.getAttribute('data-nav').replace(' ', '').toLowerCase();
+            document.querySelector("." + className + "-li").classList.remove('active');
+        }
+    })
+}
 
 
 // Scroll to anchor ID using scrollTO event
@@ -111,45 +126,3 @@ function clickEvent(event) {
 // Scroll to section on link click
 
 // Set sections as active
-
-// function activeNav() {
-//     for (let s = 0; s < sections.length; s++) {
-//         let currentSection = sections[s];
-//         for (var i = 0; i < navLinks.length; i++) {
-//             navLinks[i].classList.add('active');
-//         }
-//         console.log("currentSection.getBoundingClientRect().y", currentSection.getBoundingClientRect().y)
-//         if (currentSection.getBoundingClientRect().y <= 0) {
-//             document.querySelector("." + currentSection.getAttribute('id') + "-li").classList.add('active');
-//         }
-//     }
-// }
-let options = {
-    // root: document.querySelector('body')
-    // root: null,
-    // rootMargin: '0px',
-    threshold: 0.5
-}
-
-let observer = new IntersectionObserver(callback, options);
-sections.forEach((sec) => {
-    observer.observe(sec);
-})
-
-function callback(entries) {
-    entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-            // alert(entry.target.getAttribute('data-nav'))
-            let className = entry.target.getAttribute('data-nav').replace(' ', '').toLowerCase();
-            document.querySelector("." + className + "-li").classList.add('active');
-        }
-        else {
-            let className = entry.target.getAttribute('data-nav').replace(' ', '').toLowerCase();
-            document.querySelector("." + className + "-li").classList.remove('active');
-        }
-    })
-}
-
-
-
-// classList.contains classList.add classList.remove
